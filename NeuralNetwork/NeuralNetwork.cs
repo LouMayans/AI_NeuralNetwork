@@ -14,6 +14,9 @@ namespace NeuralNetwork
         public float threshold;
         public float bias;
 
+        public List<NeuralLink> links;
+
+        public List<Tuple<int, float,float>> changeStack;
         public float linkPrevWeight;
         public NeuralLink lastChangedLink;
         public NeuralNetwork(float inThreshold, float inBias)
@@ -21,8 +24,9 @@ namespace NeuralNetwork
             neuralNodeTree = new List<NeuralNode[]>();
             threshold = inThreshold;
             inBias = bias;
+            changeStack = new List<Tuple<int, float,float>>();
+            links = new List<NeuralLink>();
         }
-
 
         public void AddLayer(int nodeCount, int index = -1)
         {
@@ -45,7 +49,7 @@ namespace NeuralNetwork
             if (index < neuralNodeTree.Count - 1)
             {
                 foreach (NeuralNode node in neuralNodeTree[index])
-                    node.addLink(neuralNodeTree[index + 1]);
+                    links.AddRange( node.addLink(neuralNodeTree[index + 1]));
             }
             //checks if this layer is not the first layer
 
@@ -53,7 +57,7 @@ namespace NeuralNetwork
             {
                 //links the layers before this layer.
                 foreach (NeuralNode node in neuralNodeTree[index - 1])
-                    node.addLink(neuralNodeTree[index]);
+                    links.AddRange(node.addLink(neuralNodeTree[index]));
             }
         }
         public void RandomiseLinks( int seed = -1)
@@ -112,19 +116,28 @@ namespace NeuralNetwork
             return neuralOutput;
         }
 
+        public void resetStack()
+        {
+            changeStack = new List<Tuple<int, float, float>>();
+        }
+
+        public Tuple<int, float, float> change;
+
         public void ChangeRandomWeight()
         {
-            int layerIndex = rand.Next(0, neuralNodeTree.Count-1);
-            int nodeIndex = rand.Next(0, neuralNodeTree[layerIndex].GetLength(0));
-            int weightIndex = rand.Next(0, neuralNodeTree[layerIndex][nodeIndex].neuralLinks.GetLength(0));
-            linkPrevWeight = neuralNodeTree[layerIndex][nodeIndex].neuralLinks[weightIndex].weight;
-            lastChangedLink = neuralNodeTree[layerIndex][nodeIndex].neuralLinks[weightIndex];
-            lastChangedLink.weight = (float)(rand.NextDouble() * (1 - -1) + -1);
+            int linkIndex = rand.Next(0, links.Count-1);
+            float tempCurrentWeight = links[linkIndex].weight;
+            links[linkIndex].weight = (float)(rand.NextDouble() * (1 - -1) + -1);
+            //changeStack.Add(new Tuple<int, float, float>(linkIndex, tempCurrentWeight, links[linkIndex].weight));
+            change = new Tuple<int, float, float>(linkIndex, tempCurrentWeight, links[linkIndex].weight);
+
         }
         public void RevertRandomWeightChange()
         {
-            lastChangedLink.weight = linkPrevWeight;
-        }
+            links[change.Item1].weight = change.Item2;
 
+            //links[changeStack[changeStack.Count - 1].Item1].weight = changeStack[changeStack.Count - 1].Item2;
+            //changeStack.Remove(changeStack[changeStack.Count - 1]);
+        }
     }
 }

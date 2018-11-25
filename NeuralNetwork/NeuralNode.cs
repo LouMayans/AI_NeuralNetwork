@@ -24,7 +24,7 @@ namespace NeuralNetwork
             bias = inBias;
         }
 
-        public void addLink(NeuralNode[] nodes)
+        public NeuralLink[] addLink(NeuralNode[] nodes)
         {
             neuralLinks = new NeuralLink[nodes.GetLength(0)];
             int linkIndex = 0;
@@ -34,6 +34,7 @@ namespace NeuralNetwork
                 ++linkIndex;
                 node.PreviousLinks++;
             }
+            return neuralLinks;
             
         }
 

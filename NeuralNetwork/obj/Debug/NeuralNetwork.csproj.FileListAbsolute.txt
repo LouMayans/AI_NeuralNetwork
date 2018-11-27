@@ -12,3 +12,10 @@ C:\Users\Lou\Documents\Stuff\School Projects Homework Slides etc\CS Artificial I
 C:\Users\Lou\Documents\Stuff\School Projects Homework Slides etc\CS Artificial Intelligence\AI_NeuralNetwork\NeuralNetwork\obj\Debug\NeuralNetwork.csproj.CoreCompileInputs.cache
 C:\Users\Lou\Documents\Stuff\School Projects Homework Slides etc\CS Artificial Intelligence\AI_NeuralNetwork\NeuralNetwork\obj\Debug\NeuralNetwork.exe
 C:\Users\Lou\Documents\Stuff\School Projects Homework Slides etc\CS Artificial Intelligence\AI_NeuralNetwork\NeuralNetwork\obj\Debug\NeuralNetwork.pdb
+C:\Users\Louma\OneDrive\Documents\Stuff\Class Work\Artificial_Intelligence\AI_NeuralNetwork\NeuralNetwork\bin\Debug\NeuralNetwork.exe.config
+C:\Users\Louma\OneDrive\Documents\Stuff\Class Work\Artificial_Intelligence\AI_NeuralNetwork\NeuralNetwork\bin\Debug\NeuralNetwork.exe
+C:\Users\Louma\OneDrive\Documents\Stuff\Class Work\Artificial_Intelligence\AI_NeuralNetwork\NeuralNetwork\bin\Debug\NeuralNetwork.pdb
+C:\Users\Louma\OneDrive\Documents\Stuff\Class Work\Artificial_Intelligence\AI_NeuralNetwork\NeuralNetwork\obj\Debug\NeuralNetwork.csprojAssemblyReference.cache
+C:\Users\Louma\OneDrive\Documents\Stuff\Class Work\Artificial_Intelligence\AI_NeuralNetwork\NeuralNetwork\obj\Debug\NeuralNetwork.csproj.CoreCompileInputs.cache
+C:\Users\Louma\OneDrive\Documents\Stuff\Class Work\Artificial_Intelligence\AI_NeuralNetwork\NeuralNetwork\obj\Debug\NeuralNetwork.exe
+C:\Users\Louma\OneDrive\Documents\Stuff\Class Work\Artificial_Intelligence\AI_NeuralNetwork\NeuralNetwork\obj\Debug\NeuralNetwork.pdb

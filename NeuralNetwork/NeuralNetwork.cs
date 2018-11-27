@@ -16,7 +16,7 @@ namespace NeuralNetwork
 
         public List<NeuralLink> links;
 
-        public List<Tuple<int, float,float>> changeStack;
+        //public List<Tuple<int, float,float>> changeStack;
         public float linkPrevWeight;
         public NeuralLink lastChangedLink;
         public NeuralNetwork(float inThreshold, float inBias)
@@ -24,7 +24,7 @@ namespace NeuralNetwork
             neuralNodeTree = new List<NeuralNode[]>();
             threshold = inThreshold;
             inBias = bias;
-            changeStack = new List<Tuple<int, float,float>>();
+            //changeStack = new List<Tuple<int, float,float>>();
             links = new List<NeuralLink>();
         }
 
@@ -60,13 +60,8 @@ namespace NeuralNetwork
                     links.AddRange(node.addLink(neuralNodeTree[index]));
             }
         }
-        public void RandomiseLinks( int seed = -1)
+        public void RandomiseLinks( Random rand)
         {
-            if (seed == -1)
-                rand = new Random();
-            else
-                rand = new Random(seed);
-
             foreach(NeuralNode[] nodeArray in neuralNodeTree)
             {
                 foreach(NeuralNode node in nodeArray)
@@ -116,14 +111,9 @@ namespace NeuralNetwork
             return neuralOutput;
         }
 
-        public void resetStack()
-        {
-            changeStack = new List<Tuple<int, float, float>>();
-        }
-
         public Tuple<int, float, float> change;
 
-        public void ChangeRandomWeight()
+        public void ChangeRandomWeight(Random rand)
         {
             int linkIndex = rand.Next(0, links.Count-1);
             float tempCurrentWeight = links[linkIndex].weight;

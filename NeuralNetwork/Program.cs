@@ -21,11 +21,23 @@ namespace NeuralNetwork
         static int testDataCount = 100;
         static void Main(string[] args)
         {
-            
+            rand = new Random();
             CreateNetwork();
+            GenerateTestInput();
+
 
             
-            rand = new Random();
+
+            ////////////////////////////
+            float[] input1 = new float[4];
+            for (int i = 0; i < 4; i++)
+            {
+                Console.WriteLine("What is your {0} number?:", i + 1);
+                string num = Console.ReadLine();
+                input1[i] = float.Parse(num);
+            }
+
+            testInput(input1);
 
             TestData();
 
@@ -57,14 +69,10 @@ namespace NeuralNetwork
             network.AddLayer(5);
             network.AddLayer(outputLayerNodes);
 
-            network.RandomiseLinks();
+            network.RandomiseLinks(rand);
         }
-
-        public static void TestData()
+        public static void GenerateTestInput()
         {
-            if (network == null)
-                return;
-            //Generate testData
             inputTestData = new List<float[]>();
             outputTestData = new List<float[]>();
 
@@ -90,40 +98,58 @@ namespace NeuralNetwork
                     for (int j = 0; j < outputLayerNodes; j++)
                     {
                         testOutput[j] = rand.Next(0, 4);
-                        testOutput[j] = testInput[j] / 3;
+                        testOutput[j] = testOutput[j] / 3;
                     }
                 } while (outputTestData.Contains(testInput));
                 outputTestData.Add(testOutput);
             }
 
+            for (int i = 0; i < testDataCount; i++)
+            {
+                Console.WriteLine(inputTestData[i][0].ToString() + ',' + inputTestData[i][1].ToString() +
+                    ',' + inputTestData[i][2].ToString() + ',' + inputTestData[i][3].ToString() +
+                    " => " + outputTestData[i][0].ToString() + ',' + outputTestData[i][1].ToString() + ',' +
+                    outputTestData[i][2].ToString());
+            }
+        }
+
+        public static void TestData()
+        {
+            if (network == null)
+                return;
+
 
             Console.WriteLine("Testing 100 testData");
 
-            for (int iterations = 0; iterations < 10; iterations++)
+            for (int iterations = 0; iterations < 10000; iterations++)
             {
-                Console.Write('.');
+                //Initial Error
+                float initialNetworkError = 0;
                 for (int i = 0; i < testDataCount; i++)
                 {
                     network.Start(inputTestData[i]);
                     float[] initialResult = network.Output();
-                    float initialError = ErrorFunction(initialResult, outputTestData[i]);
-
-                    if (initialError == 0)
-                        continue;
-
-                    for (int check = 0; check < 100; check++)
-                    {
-                        network.ChangeRandomWeight();
-                        network.Start(inputTestData[i]);
-                        float[] endResult = network.Output();
-                        float endError = ErrorFunction(endResult, outputTestData[i]);
-
-                        if (endError < initialError)
-                            check = 1000;
-                        else
-                            network.RevertRandomWeightChange();
-                    }
+                    initialNetworkError += ErrorFunction(initialResult, outputTestData[i]);
                 }
+
+                network.ChangeRandomWeight(rand);
+
+
+                float endNetworkError = 0;
+                for (int i = 0; i < testDataCount; i++)
+                {
+                    network.Start(inputTestData[i]);
+                    float[] result = network.Output();
+                    endNetworkError += ErrorFunction(result, outputTestData[i]);
+                }
+
+                if (endNetworkError < initialNetworkError)
+                {
+                    Console.WriteLine("EndError = " + endNetworkError.ToString() + "  initialError = " + initialNetworkError.ToString());
+                    continue;
+                }    
+                else
+                    network.RevertRandomWeightChange();
             }
         }
         

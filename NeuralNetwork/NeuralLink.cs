@@ -15,8 +15,6 @@ namespace NeuralNetwork
         {
             neuralNode = node;
         }
-
-
         public void Fire(float input)
         {
             neuralNode.FromLink(input * weight);
